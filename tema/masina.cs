@@ -33,6 +33,11 @@ namespace tema
         public string optiuni { get; set; }
         public int pret { get; set; }
 
+        public enum color
+        {
+            necunoscut=-1, rosu, galben, verde, albastru, argintiu, alb, negru, mov
+        }
+
         //constructor  fara parametri
         public masina()
         {
@@ -41,7 +46,7 @@ namespace tema
             firma = "necunoscut";
             model = "necunoscut";
             an_fabricatie = 0;
-            culoare = "necunoscut";
+            culoare = color.necunoscut.ToString();
             optiuni = "necunoscut";
             pret = 0;
         }
@@ -54,7 +59,10 @@ namespace tema
             firma = _firma;
             model = _model;
             an_fabricatie = _an_fabricatie;
-            culoare = _culoare;
+            culoare = color.necunoscut.ToString();
+            foreach (color color in Enum.GetValues(typeof(color)))
+                if (_culoare == color.ToString())
+                    culoare = _culoare;
             optiuni = _optiuni;
             pret = _pret;
         }
@@ -67,7 +75,10 @@ namespace tema
             firma = _firma;
             model = _model;
             an_fabricatie = _an_fabricatie;
-            culoare = _culoare;
+            culoare = color.necunoscut.ToString();
+            foreach (color color in Enum.GetValues(typeof(color)))
+                if (_culoare == color.ToString())
+                    culoare = _culoare;
             optiuni = _optiuni;
             pret = _pret;
         }

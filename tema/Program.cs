@@ -26,8 +26,7 @@ namespace tema
         {
             masina[] masini=new masina[10];
             string nume_vanzator,nume_cumparator, firma, model, culoare, optiuni;
-            int nr_masini = 0, an_fabricatie, pret,id;
-
+            int nr_masini = 0, an_fabricatie, pret, id;
 
 
 
@@ -52,7 +51,7 @@ namespace tema
                         Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
                         for (int i=0;i<nr_masini;i++)
                         {
-                            if (masini[i].nume_cumparator!="nevanduta")
+                            if (masini[i].nume_cumparator=="nevanduta")
                             {
                                 Console.WriteLine("ID: " + i);
                                 Console.WriteLine(masini[i].conversie_sir_tranzactii());
@@ -65,7 +64,7 @@ namespace tema
                         Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
                         for (int i = 0; i < nr_masini; i++)
                         {
-                            if (masini[i].nume_cumparator == "nevanduta")
+                            if (masini[i].nume_cumparator != "nevanduta")
                             {
                                 Console.WriteLine("ID: "+i);
                                 Console.WriteLine(masini[i].conversie_sir_tranzactii());
