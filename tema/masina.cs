@@ -29,7 +29,7 @@ namespace tema
         public string firma { get; set; }
         public string model { get; set; }
         public int an_fabricatie { get; set; }
-        public string culoare { get; set; }
+        public color culoare { get; set; }
         public string optiuni { get; set; }
         public int pret { get; set; }
 
@@ -46,39 +46,33 @@ namespace tema
             firma = "necunoscut";
             model = "necunoscut";
             an_fabricatie = 0;
-            culoare = color.necunoscut.ToString();
+            culoare = color.necunoscut;
             optiuni = "necunoscut";
             pret = 0;
         }
 
         //constructor cu parametri pentru masina pusa spre vanzare
-        public masina(string _nume_vanzator,string _firma,string _model,int _an_fabricatie,string _culoare,string _optiuni,int _pret)
+        public masina(string _nume_vanzator,string _firma,string _model,int _an_fabricatie,color _culoare,string _optiuni,int _pret)
         {
             nume_vanzator = _nume_vanzator;
             nume_cumparator = "nevanduta";
             firma = _firma;
             model = _model;
             an_fabricatie = _an_fabricatie;
-            culoare = color.necunoscut.ToString();
-            foreach (color color in Enum.GetValues(typeof(color)))
-                if (_culoare == color.ToString())
-                    culoare = _culoare;
+            culoare = _culoare;
             optiuni = _optiuni;
             pret = _pret;
         }
 
         //constructor cu parametri pentru masina vanduta
-        public masina(string _nume_vanzator,string _nume_cumparator, string _firma, string _model, int _an_fabricatie, string _culoare, string _optiuni,int _pret)
+        public masina(string _nume_vanzator,string _nume_cumparator, string _firma, string _model, int _an_fabricatie, color _culoare, string _optiuni,int _pret)
         {
             nume_vanzator = _nume_vanzator;
             nume_cumparator = _nume_cumparator;
             firma = _firma;
             model = _model;
             an_fabricatie = _an_fabricatie;
-            culoare = color.necunoscut.ToString();
-            foreach (color color in Enum.GetValues(typeof(color)))
-                if (_culoare == color.ToString())
-                    culoare = _culoare;
+            culoare = _culoare;
             optiuni = _optiuni;
             pret = _pret;
         }

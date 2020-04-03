@@ -25,8 +25,9 @@ namespace tema
         static void Main(string[] args)
         {
             masina[] masini=new masina[10];
-            string nume_vanzator,nume_cumparator, firma, model, culoare, optiuni;
+            string nume_vanzator,nume_cumparator, firma, model, culoare_string, optiuni;
             int nr_masini = 0, an_fabricatie, pret, id;
+            masina.color culoare;
 
 
 
@@ -101,12 +102,18 @@ namespace tema
                         Console.WriteLine("an_fabricatie: ");
                         an_fabricatie = Int32.Parse(Console.ReadLine());
                         Console.WriteLine("Culoare: ");
-                        culoare = Console.ReadLine();
+                        culoare_string = Console.ReadLine();
+                        culoare = masina.color.necunoscut;
+                        foreach (masina.color color in Enum.GetValues(typeof(masina.color)))
+                            if (culoare_string == color.ToString())
+                                culoare = color;
+
+
                         Console.WriteLine("Optiuni: ");
                         optiuni = Console.ReadLine();
                         Console.WriteLine("pret: ");
                         pret = Int32.Parse(Console.ReadLine());
-                        masini[nr_masini] = new masina(nume_vanzator, firma, model, an_fabricatie, culoare, optiuni, pret) ;
+                        masini[nr_masini] = new masina(nume_vanzator,firma,model,an_fabricatie,culoare,optiuni,pret) ;
                         nr_masini++;
                         Console.WriteLine("\n");
 
@@ -123,7 +130,12 @@ namespace tema
                         Console.WriteLine("an_fabricatie: ");
                         an_fabricatie = Int32.Parse(Console.ReadLine());
                         Console.WriteLine("Culoare: ");
-                        culoare = Console.ReadLine();
+                        culoare_string = Console.ReadLine();
+                        culoare = masina.color.necunoscut;
+                        foreach (masina.color color in Enum.GetValues(typeof(masina.color)))
+                            if (culoare_string == color.ToString())
+                                culoare = color;
+
                         Console.WriteLine("Optiuni: ");
                         optiuni = Console.ReadLine();
                         Console.WriteLine("pret: ");
@@ -164,7 +176,12 @@ namespace tema
                                 masini[id].an_fabricatie = Int32.Parse(Console.ReadLine());
                                 break;
                             case "5":
-                                masini[id].culoare = Console.ReadLine();
+                                culoare_string = Console.ReadLine();
+                                culoare = masina.color.necunoscut;
+                                foreach (masina.color color in Enum.GetValues(typeof(masina.color)))
+                                    if (culoare_string == color.ToString())
+                                        culoare = color;
+                                masini[id].culoare = culoare;
                                 break;
                             case "6":
                                 masini[id].optiuni = Console.ReadLine();
