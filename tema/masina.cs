@@ -22,88 +22,91 @@ mașini în aceeași zi.
 
 namespace tema
 {
-    class masina
+    class Masina
     {
-        public string nume_vanzator { get; set; }
-        public string nume_cumparator { get; set; }
-        public string firma { get; set; }
-        public string model { get; set; }
-        public int an_fabricatie { get; set; }
-        public Color culoare { get; set; }
-        public string optiuni { get; set; }
-        public int pret { get; set; }
+        public string Nume_vanzator { get; set; }
+        public string Nume_cumparator { get; set; }
+        public string Firma { get; set; }
+        public string Model { get; set; }
+        public int An_fabricatie { get; set; }
+        public Color Culoare { get; set; }
+        public Options Optiuni { get; set; }
+        public int Pret { get; set; }
 
         public enum Color
         {
             necunoscut=-1, rosu, galben, verde, albastru, argintiu, alb, negru, mov
         }
 
+        [Flags]
         public enum Options
         {
-            none=0b_0000_0000,
-            AC=0b_0000_0001,
-            abs=0b_0000_0010,
-            esp=0b_0000_0100,
-            cutie_automata=0b_0000_1000,
-            navigatie=0b_0001_0000,
-            jante_aluminiu=0b_0010_0000,
-            tapiterie_piele=0b_0100_0000,
-            geamuri_electrice=0b_1000_0000
+            none=0b_0000_0000,                  //0
+            AC=0b_0000_0001,                    //1
+            abs=0b_0000_0010,                   //2
+            esp=0b_0000_0100,                   //4
+            cutie_automata=0b_0000_1000,        //8
+            navigatie=0b_0001_0000,             //16
+            jante_aluminiu=0b_0010_0000,        //32
+            tapiterie_piele=0b_0100_0000,       //64
+            geamuri_electrice=0b_1000_0000      //128
         }
 
         //constructor  fara parametri
-        public masina()
+        public Masina()
         {
-            nume_vanzator = "necunoscut";
-            nume_cumparator = "necunoscut";
-            firma = "necunoscut";
-            model = "necunoscut";
-            an_fabricatie = 0;
-            culoare = Color.necunoscut;
-            optiuni = "necunoscut";
-            pret = 0;
+            Nume_vanzator = "necunoscut";
+            Nume_cumparator = "necunoscut";
+            Firma = "necunoscut";
+            Model = "necunoscut";
+            An_fabricatie = 0;
+            Culoare = Color.necunoscut;
+            Optiuni = 0;
+            Pret = 0;
         }
 
         //constructor cu parametri pentru masina pusa spre vanzare
-        public masina(string _nume_vanzator,string _firma,string _model,int _an_fabricatie,Color _culoare,string _optiuni,int _pret)
+        public Masina(string _nume_vanzator,string _firma,string _model,int _an_fabricatie,Color _culoare,Options _optiuni,int _pret)
         {
-            nume_vanzator = _nume_vanzator;
-            nume_cumparator = "nevanduta";
-            firma = _firma;
-            model = _model;
-            an_fabricatie = _an_fabricatie;
-            culoare = _culoare;
-            optiuni = _optiuni;
-            pret = _pret;
+            Nume_vanzator = _nume_vanzator;
+            Nume_cumparator = "nevanduta";
+            Firma = _firma;
+            Model = _model;
+            An_fabricatie = _an_fabricatie;
+            Culoare = _culoare;
+            Optiuni = _optiuni;
+            Pret = _pret;
         }
 
         //constructor cu parametri pentru masina vanduta
-        public masina(string _nume_vanzator,string _nume_cumparator, string _firma, string _model, int _an_fabricatie, Color _culoare, string _optiuni,int _pret)
+        public Masina(string _nume_vanzator,string _nume_cumparator, string _firma, string _model, int _an_fabricatie, Color _culoare, Options _optiuni,int _pret)
         {
-            nume_vanzator = _nume_vanzator;
-            nume_cumparator = _nume_cumparator;
-            firma = _firma;
-            model = _model;
-            an_fabricatie = _an_fabricatie;
-            culoare = _culoare;
-            optiuni = _optiuni;
-            pret = _pret;
+            Nume_vanzator = _nume_vanzator;
+            Nume_cumparator = _nume_cumparator;
+            Firma = _firma;
+            Model = _model;
+            An_fabricatie = _an_fabricatie;
+            Culoare = _culoare;
+            Optiuni = _optiuni;
+            Pret = _pret;
         }
         
-        public string conversie_sir_tranzactii()
+        public string Conversie_sir_tranzactii()
         {
-            return string.Format("Numele cumparatorului: {0}\nNume vanzator: {1}\nModel masina: {2} {3}\nAnul fabricatiei: {4}\nCuloare: {5}\nOptiuni: {6}\nPret: {7}", nume_vanzator, nume_cumparator, firma, model, an_fabricatie, culoare, optiuni, pret);
+            
+
+            return string.Format("Numele cumparatorului: {0}\nNume vanzator: {1}\nModel masina: {2} {3}\nAnul fabricatiei: {4}\nCuloare: {5}\nOptiuni: {6}\nPret: {7}", Nume_vanzator, Nume_cumparator, Firma, Model, An_fabricatie, Culoare, Optiuni, Pret);
         }
 
-        public static Boolean operator ==(masina masina, string marca)
+        public static Boolean operator==(Masina masina, string marca)
         {
-            if (masina.firma == marca)
+            if (masina.Firma == marca)
                 return true;
             return false;
         }
-        public static Boolean operator !=(masina masina, string marca)
+        public static Boolean operator!=(Masina masina, string marca)
         {
-            if (masina.firma != marca)
+            if (masina.Firma != marca)
                 return true;
             return false;
         }

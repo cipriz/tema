@@ -24,15 +24,16 @@ namespace tema
     {
         static void Main(string[] args)
         {
-            masina[] masini=new masina[10];
-            string nume_vanzator,nume_cumparator, firma, model, culoare_string, optiuni;
+            Masina[] masini=new Masina[10];
+            string nume_vanzator,nume_cumparator, firma, model, culoare_string;
             int nr_masini = 0, an_fabricatie, pret, id;
-            masina.Color culoare;
+            Masina.Color culoare;
+            Masina.Options optiuni;
             //masina.options optiuni;
 
             /*TO DO LIST
             X - cautare cu functie de comparare in clasa
-            enum with flags
+            X - enum with flags
             citire/afisare fisier
             validari
             */
@@ -56,10 +57,10 @@ namespace tema
                         Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
                         for (int i=0;i<nr_masini;i++)
                         {
-                            if (masini[i].nume_cumparator=="nevanduta")
+                            if (masini[i].Nume_cumparator=="nevanduta")
                             {
                                 Console.WriteLine("ID: " + i);
-                                Console.WriteLine(masini[i].conversie_sir_tranzactii());
+                                Console.WriteLine(masini[i].Conversie_sir_tranzactii());
                                 Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
                             }
                         }
@@ -69,10 +70,10 @@ namespace tema
                         Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
                         for (int i = 0; i < nr_masini; i++)
                         {
-                            if (masini[i].nume_cumparator != "nevanduta")
+                            if (masini[i].Nume_cumparator != "nevanduta")
                             {
                                 Console.WriteLine("ID: "+i);
-                                Console.WriteLine(masini[i].conversie_sir_tranzactii());
+                                Console.WriteLine(masini[i].Conversie_sir_tranzactii());
                                 Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
                             }
                         }
@@ -86,7 +87,7 @@ namespace tema
                             if (masini[i] == search)
                             {
                                 Console.WriteLine("ID: " + i);
-                                Console.WriteLine(masini[i].conversie_sir_tranzactii());
+                                Console.WriteLine(masini[i].Conversie_sir_tranzactii());
                                 Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
                             }
                         }
@@ -107,19 +108,19 @@ namespace tema
                         an_fabricatie = Int32.Parse(Console.ReadLine());
                         Console.WriteLine("Culoare: ");
                         culoare_string = Console.ReadLine();
-                        culoare = masina.Color.necunoscut;
-                        foreach (masina.Color color in Enum.GetValues(typeof(masina.Color)))//enum.parse,        enum.tryparse
+                        culoare = Masina.Color.necunoscut;
+                        foreach (Masina.Color color in Enum.GetValues(typeof(Masina.Color)))//enum.parse,        enum.tryparse
                             if (culoare_string == color.ToString())
                                 culoare = color;
                         Console.WriteLine("Optiuni: ");
-                        optiuni = Console.ReadLine();
+                        optiuni = (Masina.Options)Int32.Parse(Console.ReadLine());
 
 
 
 
                         Console.WriteLine("pret: ");
                         pret = Int32.Parse(Console.ReadLine());
-                        masini[nr_masini] = new masina(nume_vanzator,firma,model,an_fabricatie,culoare,optiuni,pret) ;
+                        masini[nr_masini] = new Masina(nume_vanzator,firma,model,an_fabricatie,culoare,optiuni,pret) ;
                         nr_masini++;
                         Console.WriteLine("\n");
 
@@ -137,19 +138,17 @@ namespace tema
                         an_fabricatie = Int32.Parse(Console.ReadLine());
                         Console.WriteLine("Culoare: ");
                         culoare_string = Console.ReadLine();
-                        culoare = masina.Color.necunoscut;
-                        foreach (masina.Color color in Enum.GetValues(typeof(masina.Color)))
+                        culoare = Masina.Color.necunoscut;
+                        foreach (Masina.Color color in Enum.GetValues(typeof(Masina.Color)))
                             if (culoare_string == color.ToString())
                                 culoare = color;
                         Console.WriteLine("Optiuni: ");
-                        optiuni = Console.ReadLine();
-
-
+                        optiuni =(Masina.Options) Int32.Parse(Console.ReadLine());
 
 
                         Console.WriteLine("pret: ");
                         pret = Int32.Parse(Console.ReadLine());
-                        masini[nr_masini] = new masina(nume_vanzator,nume_cumparator, firma, model, an_fabricatie, culoare, optiuni, pret);
+                        masini[nr_masini] = new Masina(nume_vanzator,nume_cumparator, firma, model, an_fabricatie, culoare, optiuni, pret);
                         nr_masini++;
                         Console.WriteLine("\n");
 
@@ -158,7 +157,7 @@ namespace tema
                         Console.WriteLine("EDITOR TRANZACTIE");
                         Console.WriteLine("Introduceti id-ul tranzactiei.");
                         id = Int32.Parse(Console.ReadLine());
-                        Console.WriteLine(masini[id].conversie_sir_tranzactii());
+                        Console.WriteLine(masini[id].Conversie_sir_tranzactii());
                         Console.WriteLine("1 - Nume vanzator");
                         Console.WriteLine("2 - Nume cumparator");
                         Console.WriteLine("3 - Tip masina");
@@ -170,30 +169,34 @@ namespace tema
                         switch (optiune)
                         {
                             case "1":
-                                masini[id].nume_vanzator = Console.ReadLine();
+                                masini[id].Nume_vanzator = Console.ReadLine();
                                 break;
                             case "2":
-                                masini[id].nume_cumparator = Console.ReadLine();
+                                masini[id].Nume_cumparator = Console.ReadLine();
                                 break;
                             case "3":
                                 Console.WriteLine("Firma:");
-                                masini[id].firma = Console.ReadLine();
+                                masini[id].Firma = Console.ReadLine();
                                 Console.WriteLine("Model:");
-                                masini[id].model = Console.ReadLine();
+                                masini[id].Model = Console.ReadLine();
                                 break;
                             case "4":
-                                masini[id].an_fabricatie = Int32.Parse(Console.ReadLine());
+                                masini[id].An_fabricatie = Int32.Parse(Console.ReadLine());
                                 break;
                             case "5":
                                 culoare_string = Console.ReadLine();
-                                culoare = masina.Color.necunoscut;
-                                foreach (masina.Color color in Enum.GetValues(typeof(masina.Color)))
+                                culoare = Masina.Color.necunoscut;
+                                foreach (Masina.Color color in Enum.GetValues(typeof(Masina.Color)))
                                     if (culoare_string == color.ToString())
                                         culoare = color;
-                                masini[id].culoare = culoare;
+                                masini[id].Culoare = culoare;
                                 break;
                             case "6":
-                                masini[id].optiuni = Console.ReadLine();
+                                masini[id].Optiuni = (Masina.Options)Int32.Parse(Console.ReadLine());
+
+
+
+
                                 break;
                             case "7":
                                 break;
@@ -206,7 +209,7 @@ namespace tema
                         Console.WriteLine("STERGERE TRANZACTIE:");
                         Console.WriteLine("Introduceti id-ul tranzactiei.");
                         id = Int32.Parse(Console.ReadLine());
-                        Console.WriteLine(masini[id].conversie_sir_tranzactii());
+                        Console.WriteLine(masini[id].Conversie_sir_tranzactii());
                         Console.WriteLine("Introduceti 'y' daca sunteti sigur de alegerea facuta");
                         if (Console.ReadLine() == "y")
                         {
@@ -214,7 +217,7 @@ namespace tema
                             {
                                 masini[i] = masini[i + 1];
                             }
-                            masini[id] = new masina();
+                            masini[id] = new Masina();
                             nr_masini--;
                         }
 
