@@ -24,9 +24,9 @@ namespace tema
     {
         static void Main(string[] args)
         {
-            Masina[] masini=new Masina[10];
+            (Masina[] masini,int nr_masini)=load();
             string nume_vanzator,nume_cumparator, firma, model, culoare_string;
-            int nr_masini = 0, an_fabricatie, pret, id;
+            int an_fabricatie, pret, id;
             Masina.Color culoare;
             Masina.Options optiuni;
             //masina.options optiuni;
@@ -37,6 +37,7 @@ namespace tema
             citire/afisare fisier
             validari
             */
+            
             string optiune;
             do
             {
@@ -114,16 +115,12 @@ namespace tema
                                 culoare = color;
                         Console.WriteLine("Optiuni: ");
                         optiuni = (Masina.Options)Int32.Parse(Console.ReadLine());
-
-
-
-
                         Console.WriteLine("pret: ");
                         pret = Int32.Parse(Console.ReadLine());
                         masini[nr_masini] = new Masina(nume_vanzator,firma,model,an_fabricatie,culoare,optiuni,pret) ;
                         nr_masini++;
                         Console.WriteLine("\n");
-
+                        save(masini,nr_masini);
                         break;
                     case "V":
                         Console.WriteLine("Nume vanzator: ");
@@ -151,7 +148,7 @@ namespace tema
                         masini[nr_masini] = new Masina(nume_vanzator,nume_cumparator, firma, model, an_fabricatie, culoare, optiuni, pret);
                         nr_masini++;
                         Console.WriteLine("\n");
-
+                        save(masini, nr_masini);
                         break;
                     case "E":
                         Console.WriteLine("EDITOR TRANZACTIE");
@@ -203,7 +200,7 @@ namespace tema
                         }
 
 
-
+                        save(masini, nr_masini);
                         break;
                     case "R":
                         Console.WriteLine("STERGERE TRANZACTIE:");
@@ -221,7 +218,7 @@ namespace tema
                             nr_masini--;
                         }
 
-
+                        save(masini, nr_masini);
                         break;
                     case "D":
                         //TO DO
@@ -238,6 +235,41 @@ namespace tema
             } while (optiune.ToUpper() != "X");
 
 
+        }
+        static void save(Masina[] masini,int nr_masini)
+        {
+            string[] string_to_save = new string[10];
+            for(int i=0;i<nr_masini;i++)
+            {
+                string_to_save[i] = masini[i].Nume_vanzator+";"+ masini[i].Nume_cumparator + ";" + masini[i].Firma + ";" + masini[i].Model + ";" + masini[i].An_fabricatie + ";" + masini[i].Culoare + ";" + (int)masini[i].Optiuni + ";" + masini[i].Pret;
+            }
+            System.IO.File.WriteAllLines("masini.txt",string_to_save);
+        }
+        static Tuple<Masina[],int> load()
+        {
+            Masina[] masini= new Masina[10];
+            Masina.Color culoare = new Masina.Color();
+            int index = 0;
+            if (System.IO.File.Exists("masini.txt"))
+            {
+                string[] file = System.IO.File.ReadAllLines("masini.txt");
+                
+                foreach (string fisier in file)
+                {
+
+                    string[] rand = file[index].Split(';');
+                    if (rand[0].Length > 1)
+                    {
+                        foreach (Masina.Color color in Enum.GetValues(typeof(Masina.Color)))
+                            if (rand[5] == color.ToString())
+                                culoare = color;
+                        masini[index] = new Masina(rand[0], rand[1], rand[2], rand[3], Int32.Parse(rand[4]), culoare, (Masina.Options)Int32.Parse(rand[6]), Int32.Parse(rand[7]));
+                        index++;
+                    }
+                    
+                }
+            }
+            return Tuple.Create(masini,index);
         }
     }
 }
