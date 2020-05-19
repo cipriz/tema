@@ -14,6 +14,7 @@ namespace tema_GUI
     {
         Masina[] masini;
         int nr_masini=0;
+        int editrow;
         public Form1()
         {
             InitializeComponent();
@@ -23,23 +24,53 @@ namespace tema_GUI
 
         private void add_button_Click(object sender, EventArgs e)
         {
-            Masina.Color culoare=Masina.Color.necunoscut;
-            if(radioButton1.Checked)
-                culoare=Masina.Color.rosu;
-            else if(radioButton2.Checked)
-                culoare = Masina.Color.galben;
-            else if(radioButton3.Checked)
-                culoare = Masina.Color.verde;
-            else if(radioButton4.Checked)
-                culoare = Masina.Color.albastru;
-            else if(radioButton5.Checked)
-                culoare = Masina.Color.argintiu;
-            else if(radioButton6.Checked)
-                culoare = Masina.Color.alb;
-            else if(radioButton7.Checked)
-                culoare = Masina.Color.negru;
-            else if(radioButton5.Checked)
-                culoare = Masina.Color.mov;
+            
+            
+
+
+
+            //label1.Text=masini[nr_masini].Conversie_sir_tranzactii();
+            if (checkBox9.Checked)
+                masini[nr_masini] = new Masina(input_text.Text, textBox1.Text, textBox2.Text, textBox3.Text, Int32.Parse(textBox4.Text), get_color(), get_optiuni(), Int32.Parse(textBox5.Text));
+            else
+                masini[nr_masini] = new Masina(input_text.Text, textBox2.Text, textBox3.Text, Int32.Parse(textBox4.Text), get_color(), get_optiuni(), Int32.Parse(textBox5.Text));
+            nr_masini++;
+            save(masini, nr_masini);
+            dataGridView1.Refresh();
+            //dataGridView1.DataSource = masini;
+            resetfields();
+        }
+
+        private void checkBox9_CheckedChanged(object sender, EventArgs e)
+        {
+            textBox1.Enabled = checkBox9.Checked;
+        }
+
+
+        private Masina.Color get_color()
+        {
+            if (radioButton1.Checked)
+                return Masina.Color.rosu;
+            else if (radioButton2.Checked)
+                return Masina.Color.galben;
+            else if (radioButton3.Checked)
+                return Masina.Color.verde;
+            else if (radioButton4.Checked)
+                return Masina.Color.albastru;
+            else if (radioButton5.Checked)
+                return Masina.Color.argintiu;
+            else if (radioButton6.Checked)
+                return Masina.Color.alb;
+            else if (radioButton7.Checked)
+                return Masina.Color.negru;
+            else if (radioButton5.Checked)
+                return Masina.Color.mov;
+            else return Masina.Color.necunoscut;
+        }
+
+
+        private Masina.Options get_optiuni()
+        {
             Masina.Options optiuni = Masina.Options.none;
             if (checkBox1.Checked)
                 optiuni += 1;
@@ -57,28 +88,8 @@ namespace tema_GUI
                 optiuni += 64;
             if (checkBox8.Checked)
                 optiuni += 128;
-
-
-
-            //label1.Text=masini[nr_masini].Conversie_sir_tranzactii();
-            if (checkBox9.Checked)
-                masini[nr_masini] = new Masina(input_text.Text, textBox1.Text, textBox2.Text, textBox3.Text, Int32.Parse(textBox4.Text), culoare, optiuni, Int32.Parse(textBox5.Text));
-            else
-                masini[nr_masini] = new Masina(input_text.Text, textBox2.Text, textBox3.Text, Int32.Parse(textBox4.Text), culoare, optiuni, Int32.Parse(textBox5.Text));
-            nr_masini++;
-            save(masini, nr_masini);
-            resetfields();
+            return optiuni;
         }
-
-        private void checkBox9_CheckedChanged(object sender, EventArgs e)
-        {
-            textBox1.Enabled = checkBox9.Checked;
-        }
-
-
-
-
-
 
 
 
@@ -149,7 +160,70 @@ namespace tema_GUI
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            input_text.Text = masini[e.RowIndex].Nume_vanzator;
+            textBox1.Text = masini[e.RowIndex].Nume_cumparator;
+            textBox2.Text = masini[e.RowIndex].Firma;
+            textBox3.Text = masini[e.RowIndex].Model;
+            textBox4.Text = masini[e.RowIndex].An_fabricatie.ToString();
+            textBox5.Text = masini[e.RowIndex].Pret.ToString();
+            if (masini[e.RowIndex].Culoare == Masina.Color.rosu)
+                radioButton1.Checked = true;
+            else if (masini[e.RowIndex].Culoare == Masina.Color.galben)
+                radioButton2.Checked = true;
+            else if (masini[e.RowIndex].Culoare == Masina.Color.verde)
+                radioButton3.Checked = true;
+            else if (masini[e.RowIndex].Culoare == Masina.Color.albastru)
+                radioButton4.Checked = true;
+            else if (masini[e.RowIndex].Culoare == Masina.Color.argintiu)
+                radioButton5.Checked = true;
+            else if (masini[e.RowIndex].Culoare == Masina.Color.alb)
+                radioButton6.Checked = true;
+            else if (masini[e.RowIndex].Culoare == Masina.Color.negru)
+                radioButton7.Checked = true;
+            else if (masini[e.RowIndex].Culoare == Masina.Color.mov)
+                radioButton8.Checked = true;
+            editmode(true);
+            editrow = e.RowIndex;
+        }
+        private void editmode(bool mode)
+        {
+            add_button.Enabled = !mode;
+            button1.Enabled = mode;
+            button2.Enabled = mode;
+            button3.Enabled = mode;
+        }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            editmode(false);
+            resetfields();
+            masini[editrow].Nume_vanzator=input_text.Text;
+            masini[editrow].Nume_cumparator = textBox1.Text;
+            masini[editrow].Firma = textBox2.Text;
+            masini[editrow].Model = textBox3.Text;
+            masini[editrow].An_fabricatie = Int32.Parse(textBox4.Text);
+            masini[editrow].Pret = Int32.Parse(textBox5.Text);
+            masini[editrow].Optiuni = get_optiuni();
+            masini[editrow].Culoare = get_color();
+            dataGridView1.Refresh();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            editmode(false);
+            resetfields();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            editmode(false);
+            for(int i=editrow;i<nr_masini-1;i++)
+            {
+                masini[i] = masini[i + 1];
+            }
+            nr_masini--;
+            dataGridView1.Refresh();
+            resetfields();
         }
     }
 }
