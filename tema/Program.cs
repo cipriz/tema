@@ -29,12 +29,12 @@ namespace tema
             int an_fabricatie, pret, id;
             Masina.Color culoare;
             Masina.Options optiuni;
-            //masina.options optiuni;
+            
 
             /*TO DO LIST
             X - cautare cu functie de comparare in clasa
             X - enum with flags
-            citire/afisare fisier
+            X - citire/afisare fisier
             validari
             */
             
