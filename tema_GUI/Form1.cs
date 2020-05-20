@@ -160,6 +160,7 @@ namespace tema_GUI
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            resetfields();
             input_text.Text = masini[e.RowIndex].Nume_vanzator;
             textBox1.Text = masini[e.RowIndex].Nume_cumparator;
             textBox2.Text = masini[e.RowIndex].Firma;
@@ -182,8 +183,52 @@ namespace tema_GUI
                 radioButton7.Checked = true;
             else if (masini[e.RowIndex].Culoare == Masina.Color.mov)
                 radioButton8.Checked = true;
-            editmode(true);
             editrow = e.RowIndex;
+
+            int optiuni = (int)masini[e.RowIndex].Optiuni;
+            if (optiuni / 128 >= 1)
+            {
+                checkBox8.Checked = true;
+                optiuni = optiuni % 128;
+            }
+
+            if (optiuni / 64 >= 1)
+            {
+                checkBox7.Checked = true;
+                optiuni = optiuni % 64;
+            }
+            if (optiuni / 32 >= 1)
+            {
+                checkBox6.Checked = true;
+                optiuni = optiuni % 32;
+            }
+            if (optiuni / 16 >= 1)
+            {
+                checkBox5.Checked = true;
+                optiuni = optiuni % 16;
+            }
+            if (optiuni / 8 >= 1)
+            {
+                checkBox4.Checked= true;
+                optiuni = optiuni % 8;
+            }
+            if (optiuni / 4 >= 1)
+            {
+                checkBox3.Checked = true;
+                optiuni = optiuni % 4;
+            }
+            if (optiuni / 2 >= 1)
+            {
+                checkBox2.Checked = true;
+                optiuni = optiuni % 2;
+            }
+            if (optiuni  >= 1)
+            {
+                checkBox1.Checked = true;
+            }
+
+            editmode(true);
+            
         }
         private void editmode(bool mode)
         {
@@ -191,12 +236,14 @@ namespace tema_GUI
             button1.Enabled = mode;
             button2.Enabled = mode;
             button3.Enabled = mode;
+            checkBox9.Visible =!mode;
+            if (mode)
+                textBox1.Visible = mode;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             editmode(false);
-            resetfields();
             masini[editrow].Nume_vanzator=input_text.Text;
             masini[editrow].Nume_cumparator = textBox1.Text;
             masini[editrow].Firma = textBox2.Text;
@@ -206,6 +253,7 @@ namespace tema_GUI
             masini[editrow].Optiuni = get_optiuni();
             masini[editrow].Culoare = get_color();
             dataGridView1.Refresh();
+            resetfields();
         }
 
         private void button2_Click(object sender, EventArgs e)
