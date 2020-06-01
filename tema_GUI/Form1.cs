@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Management.Instrumentation;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -20,6 +21,7 @@ namespace tema_GUI
             masini = load();
             dataGridView1.DataSource = masini;
             dataGridView1.Columns[0].Width =30;
+            comboBox1.SelectedIndex = 0;
         }
 
         private void add_button_Click(object sender, EventArgs e)
@@ -113,35 +115,35 @@ namespace tema_GUI
         }
 
         
-
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             resetfields();
-            input_text.Text = masini[e.RowIndex].Nume_vanzator;
-            textBox1.Text = masini[e.RowIndex].Nume_cumparator;
-            textBox2.Text = masini[e.RowIndex].Firma;
-            textBox3.Text = masini[e.RowIndex].Model;
-            textBox4.Text = masini[e.RowIndex].An_fabricatie.ToString();
-            textBox5.Text = masini[e.RowIndex].Pret.ToString();
-            if (masini[e.RowIndex].Culoare == Masina.Color.rosu)
+            editrow = Int32.Parse(dataGridView1[0,e.RowIndex].Value.ToString());
+            input_text.Text = masini[editrow].Nume_vanzator;
+            textBox1.Text = masini[editrow].Nume_cumparator;
+            textBox2.Text = masini[editrow].Firma;
+            textBox3.Text = masini[editrow].Model;
+            textBox4.Text = masini[editrow].An_fabricatie.ToString();
+            textBox5.Text = masini[editrow].Pret.ToString();
+            if (masini[editrow].Culoare == Masina.Color.rosu)
                 radioButton1.Checked = true;
-            else if (masini[e.RowIndex].Culoare == Masina.Color.galben)
+            else if (masini[editrow].Culoare == Masina.Color.galben)
                 radioButton2.Checked = true;
-            else if (masini[e.RowIndex].Culoare == Masina.Color.verde)
+            else if (masini[editrow].Culoare == Masina.Color.verde)
                 radioButton3.Checked = true;
-            else if (masini[e.RowIndex].Culoare == Masina.Color.albastru)
+            else if (masini[editrow].Culoare == Masina.Color.albastru)
                 radioButton4.Checked = true;
-            else if (masini[e.RowIndex].Culoare == Masina.Color.argintiu)
+            else if (masini[editrow].Culoare == Masina.Color.argintiu)
                 radioButton5.Checked = true;
-            else if (masini[e.RowIndex].Culoare == Masina.Color.alb)
+            else if (masini[editrow].Culoare == Masina.Color.alb)
                 radioButton6.Checked = true;
-            else if (masini[e.RowIndex].Culoare == Masina.Color.negru)
+            else if (masini[editrow].Culoare == Masina.Color.negru)
                 radioButton7.Checked = true;
-            else if (masini[e.RowIndex].Culoare == Masina.Color.mov)
+            else if (masini[editrow].Culoare == Masina.Color.mov)
                 radioButton8.Checked = true;
-            editrow = e.RowIndex;
-
-            int optiuni = (int)masini[e.RowIndex].Optiuni;
+            //editrow = e.RowIndex;
+            
+            int optiuni = (int)masini[editrow].Optiuni;
             if (optiuni / 128 >= 1)
             {
                 checkBox8.Checked = true;
@@ -267,9 +269,44 @@ namespace tema_GUI
             return masini;
         }
 
+
+        string tosearch(Masina masina_to_search)
+        {
+            if (comboBox1.SelectedIndex == 0)
+                return masina_to_search.Nume_vanzator;
+            else if (comboBox1.SelectedIndex == 1)
+                return masina_to_search.Nume_cumparator;
+            else if (comboBox1.SelectedIndex == 2)
+                return masina_to_search.Firma;
+            else if (comboBox1.SelectedIndex == 3)
+                return masina_to_search.Model;
+            else if (comboBox1.SelectedIndex == 4)
+                return masina_to_search.An_fabricatie.ToString();
+            else if (comboBox1.SelectedIndex == 5)
+                return masina_to_search.Culoare.ToString();
+            else if (comboBox1.SelectedIndex == 6)
+                return masina_to_search.Optiuni.ToString();
+            else if (comboBox1.SelectedIndex == 7)
+                return masina_to_search.Pret.ToString();
+            else return "";
+
+
+        }
+
         private void textBox6_TextChanged(object sender, EventArgs e)
         {
-
+            List<Masina> copy_masina = new List<Masina>();
+            foreach(Masina masina in masini)
+            {
+                
+                if(tosearch(masina).Contains(textBox6.Text))
+                {
+                    copy_masina.Add(masina);
+                }
+            }
+            dataGridView1.DataSource = null;
+            dataGridView1.DataSource =copy_masina;
+            dataGridView1.Columns[0].Width = 30;
         }
     }
 }

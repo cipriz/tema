@@ -110,6 +110,7 @@ namespace tema_GUI
         }
         public static Boolean operator !=(Masina masina, string marca)
         {
+            
             if (masina.Firma != marca)
                 return true;
             return false;
