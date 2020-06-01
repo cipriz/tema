@@ -12,32 +12,24 @@ namespace tema_GUI
 {
     public partial class Form1 : Form
     {
-        Masina[] masini;
-        int nr_masini=0;
+        List<Masina> masini=new List<Masina>();
         int editrow;
         public Form1()
         {
             InitializeComponent();
-            (masini, nr_masini) = load();
+            masini = load();
             dataGridView1.DataSource = masini;
         }
 
         private void add_button_Click(object sender, EventArgs e)
         {
-            
-            
-
-
-
-            //label1.Text=masini[nr_masini].Conversie_sir_tranzactii();
             if (checkBox9.Checked)
-                masini[nr_masini] = new Masina(input_text.Text, textBox1.Text, textBox2.Text, textBox3.Text, Int32.Parse(textBox4.Text), get_color(), get_optiuni(), Int32.Parse(textBox5.Text));
+                masini.Add(new Masina(input_text.Text, textBox1.Text, textBox2.Text, textBox3.Text, Int32.Parse(textBox4.Text), get_color(), get_optiuni(), Int32.Parse(textBox5.Text)));
             else
-                masini[nr_masini] = new Masina(input_text.Text, textBox2.Text, textBox3.Text, Int32.Parse(textBox4.Text), get_color(), get_optiuni(), Int32.Parse(textBox5.Text));
-            nr_masini++;
-            save(masini, nr_masini);
-            dataGridView1.Refresh();
-            //dataGridView1.DataSource = masini;
+                masini.Add(new Masina(input_text.Text, textBox2.Text, textBox3.Text, Int32.Parse(textBox4.Text), get_color(), get_optiuni(), Int32.Parse(textBox5.Text)));
+            save(masini);
+            dataGridView1.DataSource = null;
+            dataGridView1.DataSource = masini;
             resetfields();
         }
 
@@ -63,7 +55,7 @@ namespace tema_GUI
                 return Masina.Color.alb;
             else if (radioButton7.Checked)
                 return Masina.Color.negru;
-            else if (radioButton5.Checked)
+            else if (radioButton8.Checked)
                 return Masina.Color.mov;
             else return Masina.Color.necunoscut;
         }
@@ -90,9 +82,6 @@ namespace tema_GUI
                 optiuni += 128;
             return optiuni;
         }
-
-
-
 
 
         void resetfields()
@@ -122,41 +111,7 @@ namespace tema_GUI
             radioButton8.Checked = false;
         }
 
-        static void save(Masina[] masini, int nr_masini)
-        {
-            string[] string_to_save = new string[10];
-            for (int i = 0; i < nr_masini; i++)
-            {
-                string_to_save[i] = masini[i].Nume_vanzator + ";" + masini[i].Nume_cumparator + ";" + masini[i].Firma + ";" + masini[i].Model + ";" + masini[i].An_fabricatie + ";" + masini[i].Culoare + ";" + (int)masini[i].Optiuni + ";" + masini[i].Pret;
-            }
-            System.IO.File.WriteAllLines("masini.txt", string_to_save);
-        }
-        static Tuple<Masina[], int> load()
-        {
-            Masina[] masini = new Masina[10];
-            Masina.Color culoare = new Masina.Color();
-            int index = 0;
-            if (System.IO.File.Exists("masini.txt"))
-            {
-                string[] file = System.IO.File.ReadAllLines("masini.txt");
-
-                foreach (string fisier in file)
-                {
-
-                    string[] rand = file[index].Split(';');
-                    if (rand[0].Length > 1)
-                    {
-                        foreach (Masina.Color color in Enum.GetValues(typeof(Masina.Color)))
-                            if (rand[5] == color.ToString())
-                                culoare = color;
-                        masini[index] = new Masina(rand[0], rand[1], rand[2], rand[3], Int32.Parse(rand[4]), culoare, (Masina.Options)Int32.Parse(rand[6]), Int32.Parse(rand[7]));
-                        index++;
-                    }
-
-                }
-            }
-            return Tuple.Create(masini, index);
-        }
+        
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -253,6 +208,7 @@ namespace tema_GUI
             masini[editrow].Optiuni = get_optiuni();
             masini[editrow].Culoare = get_color();
             dataGridView1.Refresh();
+            save(masini);
             resetfields();
         }
 
@@ -261,17 +217,58 @@ namespace tema_GUI
             editmode(false);
             resetfields();
         }
-
         private void button3_Click(object sender, EventArgs e)
         {
             editmode(false);
-            for(int i=editrow;i<nr_masini-1;i++)
-            {
-                masini[i] = masini[i + 1];
-            }
-            nr_masini--;
-            dataGridView1.Refresh();
+            masini.RemoveAt(editrow);
+            dataGridView1.DataSource = null;
+            dataGridView1.DataSource = masini;
+            save(masini);
             resetfields();
+        }
+
+
+        static void save(List<Masina> masini)
+        {
+            List<string> string_to_save= new List<string>();
+            foreach(Masina masina in masini)
+            {
+                string_to_save.Add(masina.Nume_vanzator + ";" + masina.Nume_cumparator + ";" + masina.Firma + ";" + masina.Model + ";" + masina.An_fabricatie + ";" + masina.Culoare + ";" + (int)masina.Optiuni + ";" + masina.Pret);
+            }
+            System.IO.File.WriteAllLines("masini.txt", string_to_save);
+        }
+
+
+        static List<Masina> load()
+        {
+            List<Masina> masini = new List<Masina>();
+            Masina.Color culoare = new Masina.Color();
+            int index = 0;
+            if (System.IO.File.Exists("masini.txt"))
+            {
+                string[] file = System.IO.File.ReadAllLines("masini.txt");
+
+                foreach (string fisier in file)
+                {
+
+                    string[] rand = file[index].Split(';');
+                    if (rand[0].Length > 1)
+                    {
+                        foreach (Masina.Color color in Enum.GetValues(typeof(Masina.Color)))
+                            if (rand[5] == color.ToString())
+                                culoare = color;
+                        masini.Add(new Masina(rand[0], rand[1], rand[2], rand[3], Int32.Parse(rand[4]), culoare, (Masina.Options)Int32.Parse(rand[6]), Int32.Parse(rand[7])));
+                        index++;
+                    }
+
+                }
+            }
+            return masini;
+        }
+
+        private void textBox6_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

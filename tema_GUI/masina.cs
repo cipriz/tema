@@ -24,6 +24,7 @@ namespace tema_GUI
 {
     class Masina
     {
+        public int ID { get; }
         public string Nume_vanzator { get; set; }
         public string Nume_cumparator { get; set; }
         public string Firma { get; set; }
@@ -55,6 +56,7 @@ namespace tema_GUI
         //constructor  fara parametri
         public Masina()
         {
+            ID = -1;
             Nume_vanzator = "necunoscut";
             Nume_cumparator = "necunoscut";
             Firma = "necunoscut";
@@ -66,8 +68,9 @@ namespace tema_GUI
         }
 
         //constructor cu parametri pentru masina pusa spre vanzare
-        public Masina(string _nume_vanzator, string _firma, string _model, int _an_fabricatie, Color _culoare, Options _optiuni, int _pret)
+        public Masina(int _ID,string _nume_vanzator, string _firma, string _model, int _an_fabricatie, Color _culoare, Options _optiuni, int _pret)
         {
+            ID = _ID;
             Nume_vanzator = _nume_vanzator;
             Nume_cumparator = "nevanduta";
             Firma = _firma;
@@ -79,8 +82,9 @@ namespace tema_GUI
         }
 
         //constructor cu parametri pentru masina vanduta
-        public Masina(string _nume_vanzator, string _nume_cumparator, string _firma, string _model, int _an_fabricatie, Color _culoare, Options _optiuni, int _pret)
+        public Masina(int _ID,string _nume_vanzator, string _nume_cumparator, string _firma, string _model, int _an_fabricatie, Color _culoare, Options _optiuni, int _pret)
         {
+            ID = _ID;
             Nume_vanzator = _nume_vanzator;
             Nume_cumparator = _nume_cumparator;
             Firma = _firma;

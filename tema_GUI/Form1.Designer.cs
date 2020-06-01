@@ -64,6 +64,8 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -81,7 +83,7 @@
             // 
             this.input_text.Location = new System.Drawing.Point(142, 12);
             this.input_text.Name = "input_text";
-            this.input_text.Size = new System.Drawing.Size(100, 20);
+            this.input_text.Size = new System.Drawing.Size(153, 20);
             this.input_text.TabIndex = 1;
             // 
             // label1
@@ -160,28 +162,28 @@
             // 
             this.textBox1.Location = new System.Drawing.Point(142, 50);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
+            this.textBox1.Size = new System.Drawing.Size(153, 20);
             this.textBox1.TabIndex = 10;
             // 
             // textBox2
             // 
             this.textBox2.Location = new System.Drawing.Point(142, 86);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 20);
+            this.textBox2.Size = new System.Drawing.Size(153, 20);
             this.textBox2.TabIndex = 11;
             // 
             // textBox3
             // 
             this.textBox3.Location = new System.Drawing.Point(142, 128);
             this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(100, 20);
+            this.textBox3.Size = new System.Drawing.Size(153, 20);
             this.textBox3.TabIndex = 12;
             // 
             // textBox4
             // 
             this.textBox4.Location = new System.Drawing.Point(142, 163);
             this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(100, 20);
+            this.textBox4.Size = new System.Drawing.Size(153, 20);
             this.textBox4.TabIndex = 13;
             // 
             // radioButton1
@@ -356,7 +358,7 @@
             // 
             this.textBox5.Location = new System.Drawing.Point(143, 430);
             this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(100, 20);
+            this.textBox5.Size = new System.Drawing.Size(152, 20);
             this.textBox5.TabIndex = 30;
             // 
             // checkBox9
@@ -407,18 +409,38 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(538, 12);
+            this.dataGridView1.Location = new System.Drawing.Point(351, 86);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(845, 514);
+            this.dataGridView1.RowHeadersVisible = false;
+            this.dataGridView1.Size = new System.Drawing.Size(806, 440);
             this.dataGridView1.TabIndex = 35;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            // 
+            // textBox6
+            // 
+            this.textBox6.Location = new System.Drawing.Point(473, 50);
+            this.textBox6.Name = "textBox6";
+            this.textBox6.Size = new System.Drawing.Size(183, 20);
+            this.textBox6.TabIndex = 36;
+            this.textBox6.TextChanged += new System.EventHandler(this.textBox6_TextChanged);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(388, 53);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(44, 13);
+            this.label9.TabIndex = 37;
+            this.label9.Text = "Cautare";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1395, 555);
+            this.ClientSize = new System.Drawing.Size(1169, 555);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.textBox6);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
@@ -501,6 +523,8 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.Label label9;
     }
 }
 
