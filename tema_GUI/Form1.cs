@@ -19,14 +19,15 @@ namespace tema_GUI
             InitializeComponent();
             masini = load();
             dataGridView1.DataSource = masini;
+            dataGridView1.Columns[0].Width =30;
         }
 
         private void add_button_Click(object sender, EventArgs e)
         {
             if (checkBox9.Checked)
-                masini.Add(new Masina(input_text.Text, textBox1.Text, textBox2.Text, textBox3.Text, Int32.Parse(textBox4.Text), get_color(), get_optiuni(), Int32.Parse(textBox5.Text)));
+                masini.Add(new Masina(masini.Count, input_text.Text, textBox1.Text, textBox2.Text, textBox3.Text, Int32.Parse(textBox4.Text), get_color(), get_optiuni(), Int32.Parse(textBox5.Text)));
             else
-                masini.Add(new Masina(input_text.Text, textBox2.Text, textBox3.Text, Int32.Parse(textBox4.Text), get_color(), get_optiuni(), Int32.Parse(textBox5.Text)));
+                masini.Add(new Masina(masini.Count, input_text.Text, textBox2.Text, textBox3.Text, Int32.Parse(textBox4.Text), get_color(), get_optiuni(), Int32.Parse(textBox5.Text)));
             save(masini);
             dataGridView1.DataSource = null;
             dataGridView1.DataSource = masini;
@@ -257,7 +258,7 @@ namespace tema_GUI
                         foreach (Masina.Color color in Enum.GetValues(typeof(Masina.Color)))
                             if (rand[5] == color.ToString())
                                 culoare = color;
-                        masini.Add(new Masina(rand[0], rand[1], rand[2], rand[3], Int32.Parse(rand[4]), culoare, (Masina.Options)Int32.Parse(rand[6]), Int32.Parse(rand[7])));
+                        masini.Add(new Masina(masini.Count, rand[0], rand[1], rand[2], rand[3], Int32.Parse(rand[4]), culoare, (Masina.Options)Int32.Parse(rand[6]), Int32.Parse(rand[7])));
                         index++;
                     }
 
