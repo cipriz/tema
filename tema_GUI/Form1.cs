@@ -14,7 +14,7 @@ namespace tema_GUI
     public partial class Form1 : Form
     {
         List<Masina> masini=new List<Masina>();
-        int editrow;
+        int editindex;
         public Form1()
         {
             InitializeComponent();
@@ -121,34 +121,34 @@ namespace tema_GUI
         
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            editrow = Int32.Parse(dataGridView1[0,e.RowIndex].Value.ToString());
+            editindex = Int32.Parse(dataGridView1[0,e.RowIndex].Value.ToString());
             resetcolors();
             resetfields();
-            input_text.Text = masini[editrow].Nume_vanzator;
-            textBox1.Text = masini[editrow].Nume_cumparator;
-            textBox2.Text = masini[editrow].Firma;
-            textBox3.Text = masini[editrow].Model;
-            textBox4.Text = masini[editrow].An_fabricatie.ToString();
-            textBox5.Text = masini[editrow].Pret.ToString();
-            if (masini[editrow].Culoare == Masina.Color.rosu)
+            input_text.Text = masini[editindex].Nume_vanzator;
+            textBox1.Text = masini[editindex].Nume_cumparator;
+            textBox2.Text = masini[editindex].Firma;
+            textBox3.Text = masini[editindex].Model;
+            textBox4.Text = masini[editindex].An_fabricatie.ToString();
+            textBox5.Text = masini[editindex].Pret.ToString();
+            if (masini[editindex].Culoare == Masina.Color.rosu)
                 radioButton1.Checked = true;
-            else if (masini[editrow].Culoare == Masina.Color.galben)
+            else if (masini[editindex].Culoare == Masina.Color.galben)
                 radioButton2.Checked = true;
-            else if (masini[editrow].Culoare == Masina.Color.verde)
+            else if (masini[editindex].Culoare == Masina.Color.verde)
                 radioButton3.Checked = true;
-            else if (masini[editrow].Culoare == Masina.Color.albastru)
+            else if (masini[editindex].Culoare == Masina.Color.albastru)
                 radioButton4.Checked = true;
-            else if (masini[editrow].Culoare == Masina.Color.argintiu)
+            else if (masini[editindex].Culoare == Masina.Color.argintiu)
                 radioButton5.Checked = true;
-            else if (masini[editrow].Culoare == Masina.Color.alb)
+            else if (masini[editindex].Culoare == Masina.Color.alb)
                 radioButton6.Checked = true;
-            else if (masini[editrow].Culoare == Masina.Color.negru)
+            else if (masini[editindex].Culoare == Masina.Color.negru)
                 radioButton7.Checked = true;
-            else if (masini[editrow].Culoare == Masina.Color.mov)
+            else if (masini[editindex].Culoare == Masina.Color.mov)
                 radioButton8.Checked = true;
             //editrow = e.RowIndex;
             
-            int optiuni = (int)masini[editrow].Optiuni;
+            int optiuni = (int)masini[editindex].Optiuni;
             if (optiuni / 128 >= 1)
             {
                 checkBox8.Checked = true;
@@ -209,14 +209,14 @@ namespace tema_GUI
             if (validare())
             {
                 editmode(false);
-                masini[editrow].Nume_vanzator = input_text.Text;
-                masini[editrow].Nume_cumparator = textBox1.Text;
-                masini[editrow].Firma = textBox2.Text;
-                masini[editrow].Model = textBox3.Text;
-                masini[editrow].An_fabricatie = Int32.Parse(textBox4.Text);
-                masini[editrow].Pret = Int32.Parse(textBox5.Text);
-                masini[editrow].Optiuni = get_optiuni();
-                masini[editrow].Culoare = get_color();
+                masini[editindex].Nume_vanzator = input_text.Text;
+                masini[editindex].Nume_cumparator = textBox1.Text;
+                masini[editindex].Firma = textBox2.Text;
+                masini[editindex].Model = textBox3.Text;
+                masini[editindex].An_fabricatie = Int32.Parse(textBox4.Text);
+                masini[editindex].Pret = Int32.Parse(textBox5.Text);
+                masini[editindex].Optiuni = get_optiuni();
+                masini[editindex].Culoare = get_color();
                 dataGridView1.Refresh();
                 save(masini);
                 resetfields();
@@ -232,8 +232,8 @@ namespace tema_GUI
         private void button3_Click(object sender, EventArgs e)
         {
             editmode(false);
-            masini.RemoveAt(editrow);
-            for(int i=editrow;i<masini.Count;i++)
+            masini.RemoveAt(editindex);
+            for(int i=editindex;i<masini.Count;i++)
             {
                 masini[i].ID--;
             }
