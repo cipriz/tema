@@ -26,14 +26,17 @@ namespace tema_GUI
 
         private void add_button_Click(object sender, EventArgs e)
         {
-            if (checkBox9.Checked)
-                masini.Add(new Masina(masini.Count, input_text.Text, textBox1.Text, textBox2.Text, textBox3.Text, Int32.Parse(textBox4.Text), get_color(), get_optiuni(), Int32.Parse(textBox5.Text)));
-            else
-                masini.Add(new Masina(masini.Count, input_text.Text, textBox2.Text, textBox3.Text, Int32.Parse(textBox4.Text), get_color(), get_optiuni(), Int32.Parse(textBox5.Text)));
-            save(masini);
-            dataGridView1.DataSource = null;
-            dataGridView1.DataSource = masini;
-            resetfields();
+            if (validare())
+            {
+                if (checkBox9.Checked)
+                    masini.Add(new Masina(masini.Count, input_text.Text, textBox1.Text, textBox2.Text, textBox3.Text, Int32.Parse(textBox4.Text), get_color(), get_optiuni(), Int32.Parse(textBox5.Text)));
+                else
+                    masini.Add(new Masina(masini.Count, input_text.Text, textBox2.Text, textBox3.Text, Int32.Parse(textBox4.Text), get_color(), get_optiuni(), Int32.Parse(textBox5.Text)));
+                save(masini);
+                dataGridView1.DataSource = null;
+                dataGridView1.DataSource = masini;
+                resetfields();
+            }
         }
 
         private void checkBox9_CheckedChanged(object sender, EventArgs e)
@@ -95,6 +98,7 @@ namespace tema_GUI
             textBox3.Text = "";
             textBox4.Text = "";
             textBox5.Text = "";
+            textBox6.Text = "";
             checkBox9.Checked = true;
             checkBox1.Checked = false;
             checkBox2.Checked = false;
@@ -117,8 +121,9 @@ namespace tema_GUI
         
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            resetfields();
             editrow = Int32.Parse(dataGridView1[0,e.RowIndex].Value.ToString());
+            resetcolors();
+            resetfields();
             input_text.Text = masini[editrow].Nume_vanzator;
             textBox1.Text = masini[editrow].Nume_cumparator;
             textBox2.Text = masini[editrow].Firma;
@@ -201,32 +206,42 @@ namespace tema_GUI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            editmode(false);
-            masini[editrow].Nume_vanzator=input_text.Text;
-            masini[editrow].Nume_cumparator = textBox1.Text;
-            masini[editrow].Firma = textBox2.Text;
-            masini[editrow].Model = textBox3.Text;
-            masini[editrow].An_fabricatie = Int32.Parse(textBox4.Text);
-            masini[editrow].Pret = Int32.Parse(textBox5.Text);
-            masini[editrow].Optiuni = get_optiuni();
-            masini[editrow].Culoare = get_color();
-            dataGridView1.Refresh();
-            save(masini);
-            resetfields();
+            if (validare())
+            {
+                editmode(false);
+                masini[editrow].Nume_vanzator = input_text.Text;
+                masini[editrow].Nume_cumparator = textBox1.Text;
+                masini[editrow].Firma = textBox2.Text;
+                masini[editrow].Model = textBox3.Text;
+                masini[editrow].An_fabricatie = Int32.Parse(textBox4.Text);
+                masini[editrow].Pret = Int32.Parse(textBox5.Text);
+                masini[editrow].Optiuni = get_optiuni();
+                masini[editrow].Culoare = get_color();
+                dataGridView1.Refresh();
+                save(masini);
+                resetfields();
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             editmode(false);
             resetfields();
+            resetcolors();
         }
         private void button3_Click(object sender, EventArgs e)
         {
             editmode(false);
             masini.RemoveAt(editrow);
+            for(int i=editrow;i<masini.Count;i++)
+            {
+                masini[i].ID--;
+            }
             dataGridView1.DataSource = null;
             dataGridView1.DataSource = masini;
+            dataGridView1.Columns[0].Width = 30;
             save(masini);
+            resetcolors();
             resetfields();
         }
 
@@ -307,6 +322,85 @@ namespace tema_GUI
             dataGridView1.DataSource = null;
             dataGridView1.DataSource =copy_masina;
             dataGridView1.Columns[0].Width = 30;
+        }
+
+
+        bool validare()
+        {
+            resetcolors();
+            bool status = true;
+            if(input_text.Text=="")
+            {
+                label1.ForeColor = Color.Red;
+                status = false;
+            }
+            if(checkBox9.Checked)
+                if(textBox1.Text=="")
+                {
+                    label2.ForeColor = Color.Red;
+                    status = false;
+                }
+            if(textBox2.Text=="")
+            {
+                label3.ForeColor = Color.Red;
+                status = false;
+            }
+            if(textBox3.Text=="")
+            {
+                label4.ForeColor = Color.Red;
+                status = false;
+            }
+            if(textBox4.Text=="")
+            {
+                label5.ForeColor = Color.Red;
+                status = false;
+            }
+            else
+            {
+                try
+                {
+                    Int32.Parse(textBox4.Text);
+                }
+                catch
+                {
+                    label5.ForeColor = Color.Red;
+                    status = false;
+                }
+
+            }
+            if (!(radioButton1.Checked || radioButton2.Checked || radioButton3.Checked || radioButton4.Checked || radioButton5.Checked || radioButton6.Checked || radioButton7.Checked || radioButton8.Checked))
+                label6.ForeColor = Color.Red;
+            if (textBox5.Text == "")
+            {
+                label8.ForeColor = Color.Red;
+                status = false;
+            }
+            else
+            {
+                try
+                {
+                    Int32.Parse(textBox5.Text);
+                }
+                catch
+                {
+                    label8.ForeColor = Color.Red;
+                    status = false;
+                }
+
+            }
+            return status;
+        }
+
+        void resetcolors()
+        {
+            label1.ForeColor = Color.Black;
+            label2.ForeColor = Color.Black;
+            label3.ForeColor = Color.Black;
+            label4.ForeColor = Color.Black;
+            label5.ForeColor = Color.Black;
+            label6.ForeColor = Color.Black;
+            label7.ForeColor = Color.Black;
+            label8.ForeColor = Color.Black;
         }
     }
 }

@@ -24,7 +24,7 @@ namespace tema_GUI
 {
     class Masina
     {
-        public int ID { get; }
+        public int ID { get; set; }
         public string Nume_vanzator { get; set; }
         public string Nume_cumparator { get; set; }
         public string Firma { get; set; }
